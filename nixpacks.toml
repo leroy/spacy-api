@@ -1,0 +1,14 @@
+# Railway / Nixpacks config for spaCy + FastAPI
+# Downloads Dutch model during build so it's bundled in the deploy
+
+[phases.setup]
+nixPkgs = ["python311", "gcc"]
+
+[phases.install]
+cmds = [
+    "pip install -r requirements.txt",
+    "python -m spacy download nl_core_news_sm"
+]
+
+[start]
+cmd = "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}"
